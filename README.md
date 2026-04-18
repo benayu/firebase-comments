@@ -34,4 +34,31 @@ const analytics = getAnalytics(app);
 
 3. Replace config in index.html with your own app config.
 
+4. Modify **Rules** in Firebase console:
+
+```
+rules_version = '2';
+service cloud.firestore {
+    match /databases/{database}/documents {
+
+        match /comments/{commentId} {
+        allow read: if true;
+            
+        allow create: if 
+            request.resource.data.username is string &&
+            request.resource.data.text is string &&
+            request.resource.data.postId is string &&
+                
+            request.resource.data.username.size() <= 50 &&
+            request.resource.data.text.size() <= 1000 &&
+                
+            request.resource.data.keys().hasOnly(['username', 'text', 'postId', 'createdAt']) &&
+                
+            request.resource.data.createdAt == request.time;
+        }        
+    }
+}
+```
+
+
 **Note: You need to create composite indexes in Firestore. Check console error for instructions.**
