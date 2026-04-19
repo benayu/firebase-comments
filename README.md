@@ -32,7 +32,7 @@ const analytics = getAnalytics(app);
 </script>
 ```
 
-3. Replace config in index.html with your own app config.
+3. Replace config in `script.js` with your own app config.
 
 4. Modify **Rules** in Firebase console:
 
